@@ -23,6 +23,13 @@ RUN apt-get -qq update && \
     nodejs \
     bash
 
+RUN wget https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tgz
+RUN tar -xf Python-2.7.18.tgz
+RUN cd /Python-2.7.18 && ./configure --with-pydebug
+RUN cd /Python-2.7.18 && make -s -j16
+RUN export PATH=$PATH:/Python-2.7.18/
+RUN ln -s /Python-2.7.18/python /usr/bin/python
+
 ADD ./entrypoint.sh /root/entrypoint.sh
 ADD ./judge.yaml /root/judge.yaml
 ADD ./judge.yaml /root/.hydro/judge.yaml
