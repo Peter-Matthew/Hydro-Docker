@@ -4,7 +4,9 @@ RUN apt-get -qq update && \
     apt-get install -y \
     gcc \
     python3 \
+    pypy3 \
     g++ \
+    fpc \
     fp-compiler \
     openjdk-17-jdk-headless \
     rustc \
@@ -14,7 +16,12 @@ RUN apt-get -qq update && \
     golang \
     ruby \
     mono-runtime \
-    mono-mcs
+    mono-mcs \
+    kotlin \
+    php \
+    php-cli \
+    nodejs \
+    bash
 
 ADD ./entrypoint.sh /root/entrypoint.sh
 ADD ./judge.yaml /root/judge.yaml
