@@ -139,4 +139,4 @@ jobs:
           context: ./${{ matrix.component }}
           push: true
           tags: |
-            ${{ matrix.registry == 'ghcr' && format('ghcr.io/{0}/{1}:{2}', toLower(github.repository_owner), matrix.image_name, (matrix.component == 'backend' && needs.check-release.outputs.backend_tag || needs.check-release.outputs.judge_tag)) || format('{0}/{1}:{2}', secrets.DOCKER_USERNAME, matrix.image_name, (matrix.component == 'backend' && needs.check-release.outputs.backend_tag || needs.check-release.outputs.judge_tag)) }}
+            ${{ matrix.registry == 'ghcr' && format('ghcr.io/{0}/{1}:{2}', $(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')", matrix.image_name, (matrix.component == 'backend' && needs.check-release.outputs.backend_tag || needs.check-release.outputs.judge_tag)) || format('{0}/{1}:{2}', secrets.DOCKER_USERNAME, matrix.image_name, (matrix.component == 'backend' && needs.check-release.outputs.backend_tag || needs.check-release.outputs.judge_tag)) }}
