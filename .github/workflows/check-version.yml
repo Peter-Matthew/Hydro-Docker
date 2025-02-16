@@ -55,7 +55,7 @@ jobs:
 
       - name: Create Release
         if: ${{ steps.version-extract.outputs.version != steps.get-release.outputs.latest_tag }}
-        uses: actions/create-release@v1  # 修正为官方可用版本
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -105,5 +105,5 @@ jobs:
           context: ./${{ matrix.component }}
           push: true
           tags: |
-            ${{ matrix.registry == 'ghcr' && format('ghcr.io/{0}/{1}:{2}', github.repository_owner, matrix.image_name, needs.check-release.outputs.version) || format('{0}/{1}:{2}', secrets.DOCKER_USERNAME, matrix.image_name, needs.check-release.outputs.version) }}
-            ${{ matrix.registry == 'ghcr' && format('ghcr.io/{0}/{1}:latest', github.repository_owner, matrix.image_name) || format('{0}/{1}:latest', secrets.DOCKER_USERNAME, matrix.image_name) }}
+            ${{ matrix.registry == 'ghcr' && format('ghcr.io/{0}/{1}:{2}', toLower(github.repository_owner), matrix.image_name, needs.check-release.outputs.version) || format('{0}/{1}:{2}', secrets.DOCKER_USERNAME, matrix.image_name, needs.check-release.outputs.version) }}
+            ${{ matrix.registry == 'ghcr' && format('ghcr.io/{0}/{1}:latest', toLower(github.repository_owner), matrix.image_name) || format('{0}/{1}:latest', secrets.DOCKER_USERNAME, matrix.image_name) }}
