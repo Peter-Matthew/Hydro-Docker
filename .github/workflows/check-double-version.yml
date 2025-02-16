@@ -1,4 +1,4 @@
-name: Version Check and Build Docker Image
+name: Double Version Check and Build Docker Image
 
 on:
   schedule:
