@@ -17,9 +17,16 @@ jobs:
       build_judge: ${{ steps.version-check.outputs.build_judge }}
       backend_tag: ${{ steps.tag-generation.outputs.backend_tag }}
       judge_tag: ${{ steps.tag-generation.outputs.judge_tag }}
+      lower_owner: ${{ steps.lowercase-owner.outputs.lower_owner }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Process lowercase owner
+        id: lowercase-owner
+        run: |
+          LOWER_OWNER=$(echo "$GITHUB_REPOSITORY_OWNER" | tr '[:upper:]' '[:lower:]')
+          echo "lower_owner=$LOWER_OWNER" >> $GITHUB_OUTPUT
 
       - name: Read VERSION file
         id: version-file
@@ -139,4 +146,4 @@ jobs:
           context: ./${{ matrix.component }}
           push: true
           tags: |
-            ${{ matrix.registry == 'ghcr' && format('ghcr.io/{0}/{1}:{2}', $(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')", matrix.image_name, (matrix.component == 'backend' && needs.check-release.outputs.backend_tag || needs.check-release.outputs.judge_tag)) || format('{0}/{1}:{2}', secrets.DOCKER_USERNAME, matrix.image_name, (matrix.component == 'backend' && needs.check-release.outputs.backend_tag || needs.check-release.outputs.judge_tag)) }}
+            ${{ matrix.registry == 'ghcr' && needs.check-release.outputs.lower_owner, matrix.image_name, (matrix.component == 'backend' && needs.check-release.outputs.backend_tag || needs.check-release.outputs.judge_tag)) || format('{0}/{1}:{2}', secrets.DOCKER_USERNAME, matrix.image_name, (matrix.component == 'backend' && needs.check-release.outputs.backend_tag || needs.check-release.outputs.judge_tag)) }}
