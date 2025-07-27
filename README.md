@@ -5,12 +5,12 @@
 > 构建日期: 2025-07-27，版本: vv5.0.0-beta.6
 
 ![backend Pulls](https://img.shields.io/docker/pulls/petermatthew/hydro-docker-backend?label=backend%20pulls)
-![backend Image Size](https://img.shields.io/docker/image-size/petermatthew/hydro-docker-backend?sort=semver&label=backend%20size)
-![hydro-docker-backend Image Version](https://img.shields.io/docker/v/petermatthew/hydro-docker-backend?sort=semver&label=hydro-docker-backend)
+![backend Image Size](https://img.shields.io/docker/image-size/petermatthew/hydro-docker-backend?sort=date&label=backend%20size)
+![hydro-docker-backend Image Version](https://img.shields.io/docker/v/petermatthew/hydro-docker-backend?sort=date&label=hydro-docker-backend)
 
 ![judge Pulls](https://img.shields.io/docker/pulls/petermatthew/hydro-docker-judge?label=judge%20pulls)
-![judge Image Size](https://img.shields.io/docker/image-size/petermatthew/hydro-docker-judge?sort=semver&label=judge%20size)
-![hydro-docker-judge Image Version](https://img.shields.io/docker/v/petermatthew/hydro-docker-judge?sort=semver&label=hydro-docker-judge)
+![judge Image Size](https://img.shields.io/docker/image-size/petermatthew/hydro-docker-judge?sort=date&label=judge%20size)
+![hydro-docker-judge Image Version](https://img.shields.io/docker/v/petermatthew/hydro-docker-judge?sort=date&label=hydro-docker-judge)
 
 ## docker 安装方式仅适用于可熟练使用 docker-compose 维护容器的用户，并要求您有基础的错误排查能力
 
