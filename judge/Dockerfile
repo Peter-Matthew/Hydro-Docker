@@ -18,7 +18,7 @@ RUN apt-get -qq update && \
     libreadline-dev \
     libsqlite3-dev \
     tk-dev \
-    default-jdk-headless \
+    openjdk-21-jdk-headless \
     fpc \
     fp-compiler \
     rustc \
