@@ -1,6 +1,13 @@
-FROM node:22-bullseye-slim
+FROM node:22-trixie-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
+
+# 添加旧版 Python2 的兼容支持（来自 snapshot.debian.org）
+RUN echo "deb http://archive.debian.org/debian buster main" >> /etc/apt/sources.list && \
+    apt-get -qq update || true && \
+    apt-get -y -o Acquire::Check-Valid-Until=false install \
+    python2-minimal \
+    python-is-python2 || true
 
 RUN apt-get -qq update && \
     apt-get install -y \
@@ -8,7 +15,7 @@ RUN apt-get -qq update && \
     g++ \
     fpc \
     fp-compiler \
-    openjdk-17-jdk-headless \
+    default-jdk-headless \
     rustc \
     ghc \
     cabal-install \
@@ -22,7 +29,6 @@ RUN apt-get -qq update && \
     php-cli \
     nodejs \
     bash \
-    python2 \
     python3 \
     pypy3 \
     wget \
