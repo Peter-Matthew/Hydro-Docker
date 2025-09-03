@@ -2,20 +2,25 @@ FROM node:22-trixie-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# 添加旧版 Python2 的兼容支持（来自 snapshot.debian.org）
-RUN echo "deb http://archive.debian.org/debian buster main" >> /etc/apt/sources.list && \
-    apt-get -qq update || true && \
-    apt-get -y -o Acquire::Check-Valid-Until=false install \
-    python2-minimal \
-    python-is-python2 || true
-
+# 基础依赖
 RUN apt-get -qq update && \
     apt-get install -y \
     gcc \
     g++ \
+    make \
+    wget \
+    curl \
+    build-essential \
+    zlib1g-dev \
+    libssl-dev \
+    libffi-dev \
+    libbz2-dev \
+    libreadline-dev \
+    libsqlite3-dev \
+    tk-dev \
+    default-jdk-headless \
     fpc \
     fp-compiler \
-    default-jdk-headless \
     rustc \
     ghc \
     cabal-install \
@@ -31,14 +36,26 @@ RUN apt-get -qq update && \
     bash \
     python3 \
     pypy3 \
-    wget \
-    curl \
-    ca-certificates && \
-    # 建立 python 命令的兼容软链接
-    update-alternatives --install /usr/bin/python python /usr/bin/python2 1 && \
-    update-alternatives --install /usr/bin/python python /usr/bin/python3 2 && \
-    # 验证各语言工具链是否正确安装
-    gcc --version && \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# 手动安装 Python2.7.18
+RUN cd /tmp && \
+    wget https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tgz && \
+    tar -xzf Python-2.7.18.tgz && \
+    cd Python-2.7.18 && \
+    ./configure --prefix=/usr/local --enable-unicode=ucs4 && \
+    make -j$(nproc) && \
+    make altinstall && \
+    ln -s /usr/local/bin/python2.7 /usr/bin/python2 && \
+    cd / && rm -rf /tmp/Python-2.7.18*
+
+# 设置 python 命令优先使用 python3
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 2 && \
+    update-alternatives --install /usr/bin/python python /usr/bin/python2 1
+
+# 验证工具链
+RUN gcc --version && \
     g++ --version && \
     fpc -iV && \
     javac -version && \

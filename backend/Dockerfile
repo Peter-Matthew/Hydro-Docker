@@ -7,4 +7,4 @@ RUN yarn global add pm2 hydrooj @hydrooj/ui-default
 RUN chmod +x /root/entrypoint.sh && \
     mkdir -p /root/.hydro
 
-ENTRYPOINT /root/entrypoint.sh
+ENTRYPOINT ["/root/entrypoint.sh"]
